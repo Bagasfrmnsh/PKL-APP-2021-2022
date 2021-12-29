@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,14 @@ Route::group(['prefix' => 'pengguna','middleware' => ['auth', 'role:pengguna']],
         return 'halaman profile pengguna';
     });
 });
+
+Route::group(['prefix' => 'admin', 'middlewere' => ['auth']], function(){
+    Route::get('barang', function(){
+        return view('admin.pengelola.index');
+    })->middleware(['role:admin|pengguna']);
+
+
+
+});
+Route::resource('admin/pengelola', BarangController::class);
 
